@@ -1,0 +1,54 @@
+extern void object::BringTitoFlag()
+{
+	object item;
+	object con;
+	point drp;
+	float distTarget;
+	point start = position;
+	
+	item = radar(Titanium);
+	con = radar(YellowFlag);
+	
+	distTarget = distance(position, item.position);
+	
+	if(con == null){
+		message("No yellow flag found");
+	}
+	
+	if(item != null){
+		if(energyCell.energyLevel - (0.001*distTarget)*2 > 0.3){
+			item = radar(Titanium,0,360,05,1000);
+			if(load == null){
+				goto(item.position,7);
+				grab();
+			}
+			
+			goto(con.position);
+			drop();
+			Recharge2();
+			goto(start);
+		}
+	}
+}
+
+void object::Recharge2()
+{
+	point  start;          // variable for initial pos.
+	object item;           // info. about power station
+	
+	item = radar(PowerStation); // look for station
+	
+	if(item != null){
+		goto(item.position);   // go to the power station
+		
+		while ( energyCell.energyLevel < 1 )
+		{
+			wait(1);            // wait until recharged
+		}
+		message("Recharge completed");
+		goto(start);
+	} else {
+		message("No power station detected");
+		goto(start);
+	}
+}

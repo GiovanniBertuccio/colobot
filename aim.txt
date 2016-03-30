@@ -1,0 +1,27 @@
+extern void object::Aim()
+{
+	object obj = radar(Derrick);
+	float dir;
+	float angle;
+	
+	angle = findAngle(obj);
+	angle = angle - pitch;
+	
+	dir = direction(obj.position);
+	message("Ori " + orientation + " Pitch " + pitch + " Roll " + roll + " Dir " + dir + " Angle " + angle);
+	aim(angle);
+}
+
+
+float object::findAngle(object tgt){
+	
+	float A;
+	float O;
+	float theta;
+	
+	A = distance2d(position, tgt.position);
+	O = tgt.position.z - position.z;
+	theta = atan(O/A);
+	//message("angle " + theta);
+	return theta;
+}

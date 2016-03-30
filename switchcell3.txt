@@ -1,0 +1,9 @@
+extern void object::SwitchCell3()
+{
+	grab(EnergyCell);  // take the cell from the bot
+	drop(Behind);     // and drop it in front
+	
+	grab(InFront);     // take the new cell in front
+	drop(EnergyCell);      // and drop it behind
+	
+}

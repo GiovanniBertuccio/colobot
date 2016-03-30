@@ -1,0 +1,17 @@
+extern void object::New()
+{
+	float eStart = 0;
+	float eEnd = 0;
+	float dTurned = 360*80;
+	
+	for(int i = 0;i < 1;i++){
+		eStart = energyCell.energyLevel;
+		turn(dTurned);
+		eEnd = energyCell.energyLevel;
+		message("Start" + eStart);
+		message("End" + eEnd);
+		message("E/degree" + (eStart - eEnd)/dTurned);
+		wait(1);
+	}
+	
+}

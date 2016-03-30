@@ -1,0 +1,36 @@
+extern void object::hunt()
+{
+	
+	object item;
+	//object etype = AlientAnt;
+	float zmin = 0;
+	float angle;
+	
+	while (true)
+	{
+		while (radar(AlienSpider, 0, 360, 0, 20) == null)
+		{
+			item = radar(AlienSpider);
+			turn(direction(item.position));
+			motor(1,1);
+			wait(0.2);
+		}
+		
+		angle = findAngle(item);
+		aim(angle);
+		fire(0.2);
+	}
+	
+}
+float object::findAngle(object tgt){
+	
+	float A;
+	float O;
+	float theta;
+	
+	A = distance2d(position, tgt.position);
+	O = tgt.position.z - position.z;
+	theta = atan(O/A);
+	//message("angle " + theta);
+	return theta;
+}

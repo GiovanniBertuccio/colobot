@@ -1,0 +1,43 @@
+extern void object::BringTitoFac()
+{
+	
+	object item;
+	object con;
+	point drp;
+	float distTarget;
+	
+	item = radar(Titanium);
+	con = radar(BotFactory);
+	
+	distTarget = distance(position, item.position);
+	
+	if(item != null){
+		if(energyCell.energyLevel - (0.001*distTarget)*2 > 0.3){
+			item = radar(Titanium,0,360,10,1000,-1);
+			if(load == null){
+				goto(item.position);
+				grab();
+			}
+			
+			goto(con.position);
+			drop();
+			move(-3);
+		}
+		Recharge2();
+	}
+	
+}
+void object::Recharge2()
+{
+	point  start;          // variable for initial pos.
+	object item;           // info. about power station
+	
+	item = radar(PowerStation); // look for station
+	goto(item.position);   // go to the power station
+	
+	while ( energyCell.energyLevel < 1 )
+	{
+		wait(1);            // wait until recharged
+	}
+	message("Recharge completed");
+}

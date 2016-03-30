@@ -1,0 +1,51 @@
+extern void object::CollectChunks()
+{
+	
+	object item;
+	object con;
+	point drp;
+	
+	item = radar(TitaniumOre);
+	con = radar(Converter);
+	
+	while(item != null){
+		while(energyCell.energyLevel > 0.3){
+			item = radar(TitaniumOre,0,360,10,1000,-1);
+			if(load == null){
+				goto(item.position);
+				grab();
+			}
+			
+			goto(con.position);
+			drop();
+			move(-3);
+			
+			while(radar(Titanium,0,10,0,5) == null){
+				wait(0.2);
+				item = radar(Titanium,0,10,0,5);
+			}
+			
+			goto(item.position);
+			grab();
+			
+			drp = space(con.position,10,30,5);
+			goto(drp);
+			drop();
+		}
+		Recharge2();
+	}
+}
+void object::Recharge2()
+{
+	point  start;          // variable for initial pos.
+	object item;           // info. about power station
+	
+	item = radar(PowerStation); // look for station
+	goto(item.position);   // go to the power station
+	
+	while ( energyCell.energyLevel < 1 )
+	{
+		wait(1);            // wait until recharged
+	}
+	message("Recharge completed");
+}

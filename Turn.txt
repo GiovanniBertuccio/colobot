@@ -1,0 +1,10 @@
+extern void object::Turn()
+{
+	object obj = radar(Derrick);
+	float dir;
+	
+	
+	dir = direction(obj.position);
+	message("Ori " + orientation + " Pitch " + pitch + " Roll " + roll + " Dir " + dir);
+	turn(dir);
+}

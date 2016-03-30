@@ -1,0 +1,17 @@
+extern void object::bringTiToFlag()
+{
+	object flag;
+	object obj;
+	point pos;
+	
+	pos = position;
+	
+	obj = radar(Titanium);
+	flag = radar(BlueFlag);
+	
+	goto(obj.position);
+	grab();
+	goto(flag.position);
+	drop();
+	
+}

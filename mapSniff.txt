@@ -1,0 +1,71 @@
+extern void object::mapSniff()
+{
+	point pList[];
+	point mList[];
+	float dInt = (365-(-365))/10;
+	point p;
+	float xm;
+	float ym;
+	bool keep[];
+	int g;
+	
+	
+	for (int i = 0; i < 10; i++){
+		xm = -365+dInt*i;
+		for (int j = 0; j < 10; j++){
+			ym = -365+dInt*j;
+			p.x = xm;
+			p.y = ym;
+			p.z = topo(xm, ym);
+			pList[sizeof(pList)] = p;
+			
+		}
+	}
+	
+	for ( int i = 0; i < sizeof(pList); i++ ){
+		keep[i] = pList[i].z > 0;
+	}
+	
+	g = 0;
+	for (int i = 0;i < sizeof(pList); i++ ){
+		if(keep[i]){
+			mList[g] = pList[i];
+			g++;
+		}
+	}
+	
+	pList = null;
+	
+	message(sizeof(pList));
+	message("mList " + sizeof(mList));
+	
+	for(int i = 0;i < sizeof(mList);i++){
+		produce(mList[i], 0, WayPoint,"");
+	}
+	
+	
+	//for(int i = 0;i < sizeof(mList);i++){
+	//goto(mList[i];
+	//sniff();
+	//}
+	
+	while(true);
+	
+}
+public class order
+{
+	int    m_type;
+	float  m_param;
+}
+
+public class exchange
+{
+	static private order m_fifo[] = null;
+	
+	// Put an order into the fifo
+	synchronized void put(order a)
+	{
+		m_fifo[sizeof(m_fifo)] = a;
+	}
+	
+	// Get an order 

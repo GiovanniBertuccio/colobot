@@ -1,0 +1,23 @@
+extern void object::BringCellToNewBot()
+{
+	object bf = radar(BotFactory);
+	object nb = radar(WheeledGrabber, direction(bf.position), 20, 0, 1000, -1);
+	object pc = radar(PowerCell, 0, 360, 0, 1000);
+	// Using retobject() and making an object list might be cleaner.
+	point start = position;
+	
+	// how do you do algebraic logic in this?
+	if(nb == null){
+		nb = radar(WingedSniffer, direction(bf.position), 20, 0, 1000, -1);
+	}
+	if(nb.energyCell == null){
+		goto(pc.position);
+		grab();
+		goto(nb.position);
+		drop();
+		goto(start);
+	} else {
+		//look for bot with no cell.
+	}
+	
+}

@@ -1,0 +1,94 @@
+extern void object::standGuard()
+{
+	object item;             // info. about object
+	int tList[];
+	int k = 0;
+	
+	tList[k++] = AlienAnt;
+	tList[k++] = AlienWasp;
+	tList[k++] = AlienSpider;
+	tList[k++] = AlienEgg;
+	tList[k++] = AlienWorm;
+	
+	while( true ){
+		
+		while ( energyCell.energyLevel > 0.2 )           
+		{
+			item = radar(tList, 0, 360, 0, 40);
+			if ( item != null )  // enemy detected ?
+			{
+				betterAim(item);
+				fire(0.1);
+			}
+			wait(0.5);
+		}
+		
+		Recharge2();
+	}
+}
+
+extern void object::Recharge2()
+{
+	point  start;          // variable for initial pos.
+	object item;           // info. about power station
+	
+	start = position;      // store initial position
+	
+	item = radar(PowerStation); // look for station
+	goto(item.position);   // go to the power station
+	
+	while ( energyCell.energyLevel < 1 )
+	{
+		wait(1);            // wait until recharged
+	}
+	
+	goto(start);           // go back to initial pos.
+	message("Recharge completed");
+}
+
+void object::betterAim(object obj){
+	
+	float dir;
+	float angle;
+	float angleCorrect;
+	float angleDrop;
+	float turnCorrect;
+	
+	dir = direction(obj.position);
+	
+	turn(dir);
+	
+	angle = findAngle(obj);
+	angleDrop = angle - pitch;
+	turnCorrect = sin(roll) * angleDrop;
+	
+	//dir = direction(obj.position);
+	//dir = dir - turnCorrect;
+	
+	turn(-turnCorrect);
+	//angleDrop = angle - pitch;
+	//turnCorrect = sin(roll) * angleDrop;
+	//dir = direction(obj.position);
+	//turn(dir-turnCorrect);
+	angleDrop = angle - pitch;
+	angleCorrect = cos(roll) * angleDrop;
+	aim(angleCorrect);
+	
+	dir = direction(obj.position);
+	message("Ori " + orientation + " Pitch " + pitch + " Roll " + roll + " Dir " + dir + " Angle " + angle + " TurnCor " + turnCorrect);
+}
+
+
+
+float object::findAngle(object tgt){
+	
+	float A;
+	float O;
+	float theta;
+	
+	A = distance2d(position, tgt.position);
+	O = tgt.position.z - position.z;
+	theta = atan(O/A);
+	//message("angle " + theta);
+	return theta;
+}
