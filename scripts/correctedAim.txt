@@ -1,0 +1,40 @@
+void object::correctedAim(object obj){
+	// Aims at obj correcting for pitch and roll.
+	// Currently works by making a rough turn towards obj before applying corrections.
+	// Multiple iterations will be more exact, but this is usually unnecessary.
+	// It's also notable that it comes to a "perfect" solution after 2-3 iterations primarily because robots do not update their pitch and roll for very small turns. I assume this is a bug.
+	// It might be possible to directly calculate the final heading and angle directly by assuming the bot will rotate exactly perpendicular to the terrain. This would remove the need for the initial rough turn. I believe I know the math for this and just need to add it.
+	// There are similar functions out there but I haven't found any as simple or complete.
+	float dir;
+	float angle;
+	float angleCorrect;
+	float angleDrop;
+	float turnCorrect;
+	
+	dir = direction(obj.position);
+	
+	turn(dir); // rough turn to object
+	
+	angle = findAngle(obj); // find angle from horizontal to target
+	angleDrop = angle - pitch; // correct for pitch
+	turnCorrect = sin(roll) * angleDrop; // roll also affects aim. When viewing from a rolled crosshair with heading facing the target, theta is the angle between the vertical and a line drawn from the apparent vertical of the crosshair to the target. A line drawn perpendicular to the apparent vertical from the target will form a right triangle, with H along the vertical from the target to the center of the crosshair, with A and O defined from that. Theta is equal to the roll of the bot. H is equal to angle - pitch. O is solved by sin(theta) * H and is the amount the bot must turn perpendicular to its current surface.
+	
+	turn(-turnCorrect); // turn slightly to correct
+	angleDrop = angle - pitch; // recalculate the new angle
+	angleCorrect = cos(roll) * angleDrop; // correct for roll. From the above A is solved by cos(theta) * H and is the amount the bot must angle perpendicular to its current surface.
+	aim(angleCorrect); // aim at correct angle
+	
+}
+
+
+float object::findAngle(object tgt){
+	// This finds the angle to the target from the horizontal using basic trigonometry
+	float A;
+	float O;
+	float theta;
+	
+	A = distance2d(position, tgt.position); // adjacent side along horizontal
+	O = tgt.position.z - position.z; // opposite side
+	theta = atan(O/A); // inverse tangent of O/A solves for the angle
+	return theta;
+}
