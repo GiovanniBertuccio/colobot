@@ -4,6 +4,7 @@ They are copied here for convenience and to allow editing.
 
 Below are descriptions and credits for each.
 
+```properties
 prog065.txt	Guard program for PhazerShooter. Put it somewhere (preferably high), activate it and watch it never miss moving targets up to 80 meters away.	PhazerShooter	vuurmeester@hotmail.com
 prog064.txt	FieldRefuel -- The purpose of this program is to extend the range of attack bots. It takes them too much energy to get out in the field to have to go back and refuel, so I just let them run as they will and have this program running on a dedicated bot all the time.	WingedGrabber	giga@netzero.net
 prog063.txt	Safe Cracker !	Any	RossK_wc2@hotmail.com
@@ -69,3 +70,4 @@ prog004.txt	Displays the total number of objects of a specified category.	All	d.
 prog003.txt	Collection of functions to position bots relative to another object. GotoStart may be flaw due to lack of testing.	All so far	daymon@primus.net
 prog002.txt	Centinel WingedGrabber. It helps with bots maintenance... like a metalic majordomo ;o) It also takes care of itself.	WingedGrabber	miguel@catsoftware.net
 prog001.txt	Small program to attack ants or spiders with WingedShooter. May be it need a bit of improvement... Messages are in spanish, sorry. ;)	WingedShooter	miguel@catsoftware.net
+```
